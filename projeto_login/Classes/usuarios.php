@@ -9,6 +9,11 @@
             global $pdo;
             global $msgErro;
 
+            $nome = "hdemybanco";
+            $host = "hdemyserver.mysql.database.azure.com";
+            $usuario = "hroot";
+            $senha = "Hdemy12345";
+
             try {
             $pdo = new PDO("mysql:dbname=".$nome.";host=".$host,$usuario,$senha);
             } catch (PDOException $e) {

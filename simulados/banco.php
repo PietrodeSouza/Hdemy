@@ -1,9 +1,9 @@
 <?php
 //Criação das credenciais da conexão
-$db_host = 'localhost';
-$db_name = 'id19894318_hdemybanco';
-$db_user = 'id19894318_hdevs';
-$db_pass ='[3z!djQLc?7B89Vc';
+$db_host = 'hdemyserver.mysql.database.azure.com';
+$db_name = 'hdemybanco';
+$db_user = 'hroot';
+$db_pass ='Hdemy12345';
 
 //msqli
 $mysqli = new mysqli($db_host, $db_user, $db_pass, $db_name);

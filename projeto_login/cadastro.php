@@ -50,7 +50,7 @@
                     //verificar se os campos estão preenchidos
                     if(!empty($nome) && !empty($endereco) && !empty($cidade) && !empty($cep) && !empty($uf) && !empty($telefone) && !empty($email) && !empty($senha) && !empty($confirmarsenha))
                     {
-                        $v->conectar("id19894318_hdemybanco", "localhost", "id19894318_hdevs", "[3z!djQLc?7B89Vc");
+                        $v->conectar("hroot", "hdemyserver.mysql.database.azure.com", "hdemybanco", "Hdemy12345");
                         if($v->msgErro == "") //se está tudo certo (sem erros)
                         {
                             if($senha == $confirmarsenha)

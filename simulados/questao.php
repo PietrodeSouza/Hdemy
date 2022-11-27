@@ -71,7 +71,7 @@
                         <?php endwhile; ?>
                         <div id="resposta">
                         <?php
-                            $connection=mysqli_connect("localhost", "id19894318_hdevs", "[3z!djQLc?7B89Vc", "id19894318_hdemybanco"); //endereço do banco - server, username, senha, nome do banco
+                            $connection=mysqli_connect("hdemyserver.mysql.database.azure.com", "hroot", "Hdemy12345", "hdemybanco"); //endereço do banco - server, username, senha, nome do banco
                             
                             if($connection){
                                 echo "<h4>Alternativa correta: </h4>";
