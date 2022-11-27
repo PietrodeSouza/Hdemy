@@ -59,5 +59,3 @@ PROBLEMA - toda vez que reinicia o teste, a pontuacao não reinicia
 
 
 (variavel) insert_row - inserir_coluna
-
-oi
