@@ -1,6 +1,6 @@
 <?php
     require_once 'Classes/usuarios.php';
-    $v = new Usuario;
+    $v = new Usuario();
 ?>
 
 <html lang="pt-br">
@@ -27,41 +27,62 @@
             </form>
         </div>
             <?php
-                if (isset($_POST['email']))
-                {
+                $nome = "hdemybanco";
+                $host = "hdemyserver.mysql.database.azure.com";
+                $usuario = "hroot";
+                $senha = "Hdemy12345";
+                $options = [
+                    PDO::MYSQL_ATTR_SSL_CA => './../certificado.crt.pem',
+                    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
+                ];
+
+                try {
+                    $pdo = new PDO("mysql:dbname=" . $nome . ";host=" . $host, $usuario, $senha, $options);
+
+                    echo "Conexao 1 OK!";
+                } catch (PDOException $e) {
+                    var_dump($e);
+                    echo($e->getMessage());
+                }
+
+
+                $connection = mysqli_init();
+                $connection->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+                $connection->ssl_set(null, null, "./../certificado.crt.pem", null, null);
+                $connection->real_connect('hdemyserver.mysql.database.azure.com', 'hroot', 'Hdemy12345', 'hdemybanco');
+
+                if (!$connection) {
+                    var_dump(mysqli_connect_error());
+                } else {
+                    echo "conexao 2 OK!";
+                }
+
+
+                if (isset($_POST['email'])) {
                     $email = addslashes($_POST['email']);
                     $senha = addslashes($_POST['senha']);
 
                     //verificar se os campos estão preenchidos
-                    if(!empty($email) && !empty($senha))
-                    {
+                    if (!empty($email) && !empty($senha)) {
                         $v->conectar("id19894318_hdemybanco", "localhost", "id19894318_hdevs", "[3z!djQLc?7B89Vc");
-                        if($v->msgErro == "")
-                        {
-                            if($v->logar($email, $senha))
-                            {
+                        if ($v->msgErro == "") {
+                            if ($v->logar($email, $senha)) {
                                 header("location: ../simulados/index.php");
-                            }
-                            else
-                            {
+                            } else {
                                 ?>
                                     <div class="msg-erro">
                                     Email e/ou Senha Errados!
                                     </div>
                                 <?php
                             }
-                        }
-                        else
-                        {
+                        } else {
                             ?>
                                 <div class="msg-erro">
-                                    <?php echo "Erro: ".$v->msgErro; ?>
+                                <?php echo "Erro: " . $v->msgErro; ?>
                                 </div>
                             <?php
                         }
-                    }
-                    else
-                    {
+                    } else {
                         ?>
                             <div class="msg-erro">
                                 Preencha todos os campos!
@@ -69,6 +90,6 @@
                         <?php
                     }
                 }
-            ?>
+                ?>
     </body>
 </html>

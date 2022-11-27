@@ -2,11 +2,10 @@
 
 <?php
     session_start();
-    if(!isset($_SESSION['id_usuario']))
-    {
-        header("location: ../projeto_login/index.php");
-        exit;
-    }
+if (!isset($_SESSION['id_usuario'])) {
+    header("location: ../projeto_login/index.php");
+    exit;
+}
 ?>
 
 
@@ -21,7 +20,7 @@
 
     $query = "SELECT * FROM questoes";
     //Obter resultado
-    $resultados = $mysqli->query($query) or die($mysqli->error.__LINE__);
+    $resultados = $mysqli->query($query) or die($mysqli->error . __LINE__);
     $total = $resultados->num_rows;
 
     /*
@@ -30,7 +29,7 @@
     $query = "SELECT * FROM questoes 
     WHERE questao_numero = $numero";
     //Obter resultados
-    $resultado = $mysqli->query($query) or die($mysqli->error.__LINE__);
+    $resultado = $mysqli->query($query) or die($mysqli->error . __LINE__);
 
     $questao = $resultado->fetch_assoc();
 
@@ -40,7 +39,7 @@
     $query = "SELECT * FROM alternativas 
     WHERE questao_numero = $numero";
     //Obter resultados
-    $alternativas = $mysqli->query($query) or die($mysqli->error.__LINE__);
+    $alternativas = $mysqli->query($query) or die($mysqli->error . __LINE__);
 ?>
 <!DOCTYPE html>
 <html>
@@ -66,34 +65,37 @@
                 </p>
                 <form method="post" action="processo.php">
                     <ul class="alternativas">
-                        <?php while($row = $alternativas->fetch_assoc()): ?>
+                        <?php while ($row = $alternativas->fetch_assoc()) : ?>
                             <li><input name="alternativa" type="radio" value="<?php echo $row['id']; ?>" /><?php echo $row['alternativa_texto']; ?></li>
                         <?php endwhile; ?>
                         <div id="resposta">
                         <?php
-                            $connection=mysqli_connect("hdemyserver.mysql.database.azure.com", "hroot", "Hdemy12345", "hdemybanco"); //endereço do banco - server, username, senha, nome do banco
-                            
-                            if($connection){
-                                echo "<h4>Alternativa correta: </h4>";
-                            } else{
-                                die("Conexão falhou. Razão: ".mysqli_connect_error());
-                            }
+                            $connection = mysqli_init();
+                            $connection->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+                            $connection->ssl_set(null, null, "./../certificado.crt.pem", null, null);
+                            $connection->real_connect('hdemyserver.mysql.database.azure.com', 'hroot', 'Hdemy12345', 'hdemybanco');
 
-                            $sql="SELECT id, alternativa_texto FROM alternativas WHERE questao_numero = $numero and esta_correto = 1";
+                        if ($connection) {
+                            echo "<h4>Alternativa correta: </h4>";
+                        } else {
+                            die("Conexão falhou. Razão: " . mysqli_connect_error());
+                        }
 
-                            $resultadoquery=mysqli_query($connection,$sql);
+                            $sql = "SELECT id, alternativa_texto FROM alternativas WHERE questao_numero = $numero and esta_correto = 1";
 
-                            if (mysqli_num_rows($resultadoquery)>0)
+                            $resultadoquery = mysqli_query($connection, $sql);
 
-                            while($rowquery=mysqli_fetch_array($resultadoquery)){
-                                //if(mysqli_query(esta_correto from alternativas = 1)) {
-                                    //echo "aaa";
-                                //} else{
-                                    //echo "ouo";
-                                //}
+                        if (mysqli_num_rows($resultadoquery) > 0) {
+                            while ($rowquery = mysqli_fetch_array($resultadoquery)) {
+                            //if(mysqli_query(esta_correto from alternativas = 1)) {
+                                //echo "aaa";
+                            //} else{
+                                //echo "ouo";
+                            //}
                                 echo "<h4>$rowquery[1]</h4>"; //." ".$rowquery[2];
                                 echo '<br>';
                             }
+                        }
 
                         ?>
                         </div>
