@@ -67,7 +67,8 @@
                         $v->conectar("id19894318_hdemybanco", "localhost", "id19894318_hdevs", "[3z!djQLc?7B89Vc");
                         if ($v->msgErro == "") {
                             if ($v->logar($email, $senha)) {
-                                header("location: ../simulados/index.php");
+                                header("Location: ../simulados/index.php");
+                                die();
                             } else {
                                 ?>
                                     <div class="msg-erro">
