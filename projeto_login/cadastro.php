@@ -30,7 +30,7 @@
                 <input type="password" name="senha" placeholder="Senha" maxlength="32">
                 <input type="password" name="confsenha" placeholder="Confirmar Senha" maxlength="32">
                 <input class="ca" type="submit" value="CADASTRAR">
-                <a href="index.php">Se cadastrado, <strong>Entre</strong></a>
+                <a href="index.php">Se cadastrado, <strong>entre</strong></a>
             </form>
         </div>
             <?php
